@@ -1,0 +1,69 @@
+This is for input and output structure for this 2-D Monte Carlo code.
+
+WARNING:  HP Computers had segementation fault with original
+          array declaration set to high value. It was actually
+          larger than EWS HP memory allotment.
+
+*****INPUT STRUCTURE is 3 LINES
+1        15         1         0.00     ! Lattice, L, V_nn, mu
+10.0     0.10      200                 ! T_initial, T_final, TSTEPS
+400      1089561                       ! ntimes, iseed for RNG
+
+
+LINE 1 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+LINE 1: MC code works for LATTICE=
+  1= square
+  2= triangular
+  3= rhombohedral
+
+LINE 1: Box Size L=
+  5 = repeated 5   sites per direction
+  10= repeated 10  sites per direction
+
+LINE 1: V_nn=  magnetiude and sign  of nearest neighbor interaction
+  V = -1   FM Ising Model
+  V = +1  AFM Ising Model
+
+LINE 1: mu= chemical potential difference
+ mu = 0  no external field (or 50% up and 50% dn)
+LINE 1 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+LINE 2 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+LINE 2:  T_initial = starting temperature (CANNOT BE ZERO !!!!)
+  T_initial = 10  temperature in units of V_nn 
+
+LINE 2:  T_final   = final    temperature (CANNOT BE ZERO !!!!)
+  T_initial = 1   temperature in units of V_nn 
+
+LINE 2:  TSTEPS = steps in temperature
+  TSTEPS = 10  (MUST BE INTEGER)
+LINE 2 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+LINE 3 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+LINE 3:  ntimes = Integer  Number of sample for avg. 
+   ntimes= 125       (e.g.)
+
+LINE 3:   iseed = directly change RNG seed to do multiple runs.
+    iseed= 1089561   (e.g.)
+LINE 3 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+*****OUTPUT STRUCTURE
+
+file1.out  
+   Temperature, time, Energy/atom, Magnetization/atom  
+
+file2.out 
+   T, E/atom, deltaE/atom, Mag/atom, dM/atom,  Cv/atom
+
+file3.out
+   T
+   configuration given by 1 (0) for up(dn) or A(B)
+   * Note that the printout is for L+2 because it includes 
+   * the buffer layer (arising from the Boundary conditions)
+   * around the L-sized simulation cell.
+
+file4.out
+   T, # of raises accepted, # of lowering accepted, # of rejected
+         (SUM OF LAST THREE = constant = number of attempts)

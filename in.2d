@@ -1,0 +1,4 @@
+1      50        -50    1000	3000  != lattype, L, V2, V1, erko;  note: V2=-1 FM
+100    150       100	  != Tinit, Tfinal, nTsteps
+30    1089561            != ntimes, RNG iseed
+2				!= q; q=1 one-way, q=2 up-down
