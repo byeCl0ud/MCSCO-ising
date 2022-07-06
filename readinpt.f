@@ -27,6 +27,5 @@ c
         call random_initial(iseed)
        nMC=L+2            ! no. of steps before sampling.
 c       ntimes=125         ! no. of times sampled for avg.
-c       WRITE(*,*) 'erko je',erko
       return
       end

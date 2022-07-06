@@ -1,6 +1,7 @@
       program MC2DIM
 c
 c Core part of Monte Carlo simulation of Ising-like SCO model
+c *** M. Blasko et al., 2022 ***
 c
 
        implicit none

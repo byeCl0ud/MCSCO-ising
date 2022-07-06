@@ -80,7 +80,7 @@ c       idk what I'm doing
 c
 c       ni is number of T intervals in one way
         ni=nint(float(nTsteps-q)/float(q))
-c       
+       
 c       dT is temperature differential        
         dT=(Tfinal-Tinit)/ni
 

@@ -1,13 +1,23 @@
-This is for input and output structure for this 2-D Monte Carlo code.
+This program works as a Monte Carlo spin crossover simulation in
+Ising model aproximation. It generates output file with 3 columns - 
+temperature, energy and magnetization. Programs like gnuplot can be 
+used to make graphs. 
 
-WARNING:  HP Computers had segementation fault with original
-          array declaration set to high value. It was actually
-          larger than EWS HP memory allotment.
+***Building
+Use build script compile.sh to compile with Intel Fortran Compiler, 
+or gfortran_compile.sh to compile with GNU Fortran: 
+"chmod +x compile.sh && ./compile.sh"
 
-*****INPUT STRUCTURE is 3 LINES
-1        15         1         0.00     ! Lattice, L, V_nn, mu
-10.0     0.10      200                 ! T_initial, T_final, TSTEPS
-400      1089561                       ! ntimes, iseed for RNG
+***Running
+First set your input according to the input structure below in file in.2d. 
+Then simply run compiled file: 
+"./a.out"
+
+*****INPUT STRUCTURE is 4 LINES
+1        30         1         0.00     ! Lattice, L, J, delta, r
+100     150      100                   ! T_initial, T_final, TSTEPS
+300      1089561                       ! ntimes, iseed for RNG
+2				       ! q; q=1 one-way, q=2 up-down
 
 
 LINE 1 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -20,20 +30,23 @@ LINE 1: Box Size L=
   5 = repeated 5   sites per direction
   10= repeated 10  sites per direction
 
-LINE 1: V_nn=  magnetiude and sign  of nearest neighbor interaction
+LINE 1: J=  magnetitude and sign  of nearest neighbor interaction
   V = -1   FM Ising Model
   V = +1  AFM Ising Model
 
-LINE 1: mu= chemical potential difference
+LINE 1: delta= chemical potential difference
  mu = 0  no external field (or 50% up and 50% dn)
+
+LINE 1: r= effective degeneracy ratio
+ r = 2000
 LINE 1 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 LINE 2 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
 LINE 2:  T_initial = starting temperature (CANNOT BE ZERO !!!!)
-  T_initial = 10  temperature in units of V_nn 
+  T_initial = 1  temperature in units of delta 
 
 LINE 2:  T_final   = final    temperature (CANNOT BE ZERO !!!!)
-  T_initial = 1   temperature in units of V_nn 
+  T_final = 200   temperature in units of delta
 
 LINE 2:  TSTEPS = steps in temperature
   TSTEPS = 10  (MUST BE INTEGER)
@@ -48,22 +61,15 @@ LINE 3:   iseed = directly change RNG seed to do multiple runs.
     iseed= 1089561   (e.g.)
 LINE 3 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+LINE 4 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+LINE 4:  q = boolean integer to set the nature of simulation
+   q= 1 one-way MC SCO simulation
+   q= 2 temperature goes up and then down (or vice versa)
+LINE 4 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 *****OUTPUT STRUCTURE
 
-file1.out  
-   Temperature, time, Energy/atom, Magnetization/atom  
+output
+   T, E/atom, Mag/atom
 
-file2.out 
-   T, E/atom, deltaE/atom, Mag/atom, dM/atom,  Cv/atom
-
-file3.out
-   T
-   configuration given by 1 (0) for up(dn) or A(B)
-   * Note that the printout is for L+2 because it includes 
-   * the buffer layer (arising from the Boundary conditions)
-   * around the L-sized simulation cell.
-
-file4.out
-   T, # of raises accepted, # of lowering accepted, # of rejected
-         (SUM OF LAST THREE = constant = number of attempts)
+*** M. Blasko et al., 2022 ***
